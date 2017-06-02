@@ -1,0 +1,233 @@
+%YAML 1.2
+---
+# Based on https://tools.ietf.org/html/rfc6020
+name: Yang
+file_extensions:
+  - yang
+scope: source.yang
+variables:
+  ident: '[a-zA-Z_][a-zA-Z0-9_\.\-]*'
+  b_l: '(?<![-\w])'
+  b_r: '(?![-\w])'
+  int_types: '(int8|int16|int32|int64|uint8|uint16|uint32|uint64)'
+  yang_types: '({{int_types}}|decimal64|string|boolean|enumeration|bits|binary|leafref|identityref|empty|union|instance-identifier)'
+
+  yang_lang_const: '(true|false|current|deprecated|obsolete|not-supported|add|replace|delete|unbounded|system|user|min|max)'
+  #yang_keyword: '(argument|base|belongs-to|bit|case|config|contact|default|description|enum|error-app-tag|error-message|deviation|deviate|feature|fraction-digits|grouping|identity|if-feature|import|include|input|key|length|mandatory|max-elements|min-elements|must|namespace|ordered-by|organization|output|path|pattern|position|prefix|presence|range|reference|refine|require-instance|revision|revision-date|status|unique|units|uses|value|when|yang-version|yin-element)'
+  #custom_keyword: '({{ident}}:{{ident}})'
+  #keyword: '{{yang_keyword}}|{{custom_keyword}}'
+  unq_string: '[^\s;{}(\/\/)(\/\*)(\/\*)]+'
+contexts:
+  main:
+    # Line comments begin with a '//' and finish at the end of the line
+    - match: '//'
+      scope: punctuation.definition.comment.yang
+      push: line_comment
+
+    # Block comments begin with a '/*' and finish with a '*/'
+    - match: '/\*'
+      scope: punctuation.definition.comment.yang
+      push: block_comment
+
+    # Module statement
+    - match: '{{b_l}}(module)\s+({{ident}})\s*{'
+      scope: meta.statement.module.yang
+      captures:
+        1: keyword.other.module.yang
+        2: entity.name.module.yang
+
+    # Subodule statement
+    - match: '{{b_l}}(submodule)\s+({{ident}})\s*{'
+      scope: meta.statement.submodule.yang
+      captures:
+        1: keyword.other.submodule.yang
+        2: entity.name.submodule.yang
+
+    # Typedef statement
+    - match: '{{b_l}}(typedef)\s+({{ident}})\s*{'
+      scope: meta.statement.typedef.yang
+      captures:
+        1: keyword.other.typedef.yang
+        2: entity.name.type.yang
+
+    # Type statement
+    - match: '{{b_l}}(type)\s+({{yang_types}})\s*[{|;]'
+      scope: meta.statement.type.yang
+      captures:
+        1: keyword.operator.type.yang
+        2: storage.type.yang
+
+    # Container statement
+    - match: '{{b_l}}(container)\s+({{ident}})\s*{'
+      scope: meta.statement.container.yang
+      captures:
+        1: keyword.other.container.yang
+        2: entity.name.container.yang
+
+    # Leaf statement
+    - match: '{{b_l}}(leaf)\s+({{ident}})\s*{'
+      scope: meta.statement.leaf.yang
+      captures:
+        1: keyword.other.leaf.yang
+        2: entity.name.leaf.yang
+
+    # Leaf-list statement
+    - match: '{{b_l}}(leaf-list)\s+({{ident}})\s*{'
+      scope: meta.statement.leaf-list.yang
+      captures:
+        1: keyword.other.leaf-list.yang
+        2: entity.name.leaf-list.yang
+
+    # List statement
+    - match: '{{b_l}}(list)\s+({{ident}})\s*{'
+      scope: meta.statement.list.yang
+      captures:
+        1: keyword.other.list.yang
+        2: entity.name.list.yang
+
+    # Choice statement
+    - match: '{{b_l}}(choice)\s+({{ident}})\s*{'
+      scope: meta.statement.choice.yang
+      captures:
+        1: keyword.other.choice.yang
+        2: variable.parameter.yang
+
+    # Anyxml statement
+    - match: '{{b_l}}(anyxml)\s+({{ident}})\s*{'
+      scope: meta.statement.anyxml.yang
+      captures:
+        1: keyword.other.anyxml.yang
+        2: variable.parameter.yang
+
+    # Grouping statement
+    - match: '{{b_l}}(grouping)\s+({{ident}})\s*{'
+      scope: meta.statement.grouping.yang
+      captures:
+        1: keyword.other.grouping.yang
+        2: entity.name.grouping.yang
+
+    # Uses statement
+    - match: '{{b_l}}(uses)\s+({{ident}})\s*[{|;]'
+      scope: meta.statement.uses.yang
+      captures:
+        1: keyword.other.uses.yang
+        2: variable.parameter.yang
+
+    # Rpc statement
+    - match: '{{b_l}}(rpc)\s+({{ident}})\s*[{|;]'
+      scope: meta.statement.rpc.yang
+      captures:
+        1: keyword.other.rpc.yang
+        2: variable.parameter.yang
+
+    # Notification statement
+    - match: '{{b_l}}(notification)\s+({{ident}})\s*[{|;]'
+      scope: meta.statement.notification.yang
+      captures:
+        1: keyword.other.notification.yang
+        2: variable.parameter.yang
+
+    # Augment statement
+    - match: '{{b_l}}(augment)\s+({{ident}})\s*[{|;]'
+      scope: meta.statement.augment.yang
+      captures:
+        1: keyword.other.augment.yang
+        2: variable.parameter.yang
+
+    # Identity statement
+    - match: '{{b_l}}(identity)\s+({{ident}})\s*[{|;]'
+      scope: meta.statement.identity.yang
+      captures:
+        1: keyword.other.identity.yang
+        2: variable.parameter.yang
+
+    # Extension statement
+    - match: '{{b_l}}(extension)\s+({{ident}})\s*[{|;]'
+      scope: meta.statement.extension.yang
+      captures:
+        1: keyword.other.extension.yang
+        2: variable.parameter.yang
+
+    # Generic statements
+    # - match: '{{b_l}}({{keyword}}){{b_r}}\s*;'
+    #   scope: statement.yang
+    #   captures:
+    #     1: keyword.other.yang
+    # - match: '{{b_l}}({{keyword}}){{b_r}}\s+({{unq_string}})\s*;'
+    #   scope: statement.yang
+    #   captures:
+    #     1: keyword.other.yang
+    #     2: test.yang
+    # - match: '{{b_l}}({{keyword}}){{b_r}}\s*{'
+    #   scope: statement.yang
+    #   captures:
+    #     1: keyword.other.yang
+    # - match: '{{b_l}}({{keyword}}){{b_r}}\s+({{unq_string}})\s*{'
+    #   scope: statement.yang
+    #   captures:
+    #     1: keyword.other.yang
+    #     2: test.yang
+
+    # Integer constants
+    - match: '(?<![\w\-\+])([\+\-])?0x\d+\b'
+      scope: constant.numeric.integer.hexadecimal.yang
+    - match: '(?<![\w\-\+])([\+\-])?0\d+\b'
+      scope: constant.numeric.integer.octal.yang
+    - match: '(?<![\w\-\+])([\+\-])?\d+\b'
+      scope: constant.numeric.integer.decimal.yang
+      # We put the decimal last in order to support a single '0'
+
+    # Decimal64 constant
+    - match: '(?<![\w\-\+])([\+\-])?\d+\.\d+\b'
+      scope: constant.numeric.real.decimal64.yang
+
+    # Double quoted strings begin with '"' and finish with '"'.
+    - match: '"'
+      scope: punctuation.definition.string.begin.yang
+      push: double_quoted_string
+
+    # Single quoted strings begin with ' and finish with '.
+    - match: "'"
+      scope: punctuation.definition.string.begin.yang
+      push: single_quoted_string
+
+    # Boolean constant
+    - match: '{{b_l}}(true|false){{b_r}}'
+      scope: constant.language.boolean.yang
+
+    # Language constants
+    - match: '{{b_l}}{{yang_lang_const}}{{b_r}}'
+      scope: constant.language.yang
+
+    # Unquoted strings have not bounding characters, but spaces, tabs, semicolon,
+    # curly braces or comment sequences are not allowed. As this matches pretty
+    # much anything, this should probably always be the last rule.
+    # - match: 'unq_string'
+    #   scope: string.unquoted.yang
+
+  line_comment:
+    - meta_scope: comment.line.yang
+    - match: $
+      pop: true
+
+  block_comment:
+    - meta_scope: comment.block.yang
+    - match: '\*/'
+      scope: punctuation.definition.comment.yang
+      pop: true
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.yang
+    # Special characters can be introduced using '\'
+    - match: '\\[n|t|"|\\]'
+      scope: constant.character.escape.yang
+    - match: '"'
+      scope: punctuation.definition.string.end.yang
+      pop: true
+
+  single_quoted_string:
+    - meta_scope: string.quoted.single.yang
+    # No special characters are allowed
+    - match: "'"
+      scope: punctuation.definition.string.end.yang
+      pop: true
