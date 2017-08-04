@@ -17,10 +17,14 @@ variables:
   unq_string: '[^\s;{}(\/\/)(\/\*)(\*\/)]+'
 contexts:
   main:
-    #
-    # Comments
-    #
+    - include: comments
+    - include: entities
+    - include: variables
+    - include: storage
+    - include: other
+    - include: constants
 
+  comments:
     # Line comments begin with a '//' and finish at the end of the line
     - match: '//'
       scope: punctuation.definition.comment.yang
@@ -31,10 +35,7 @@ contexts:
       scope: punctuation.definition.comment.yang
       push: block_comment
 
-    #
-    # Entities
-    #
-
+  entities:
     # Module statement
     - match: '{{b_l}}(module)\s+({{ident}})\s*{'
       scope: meta.statement.module.yang
@@ -91,10 +92,7 @@ contexts:
         1: keyword.other.grouping.yang
         2: entity.name.grouping.yang
 
-    #
-    # Variables
-    #
-
+  variables:
     # Choice statement
     - match: '{{b_l}}(choice)\s+({{ident}})\s*{'
       scope: meta.statement.choice.yang
@@ -151,10 +149,7 @@ contexts:
         1: keyword.other.extension.yang
         2: variable.parameter.yang
 
-    #
-    # Storage
-    #
-
+  storage:
     # Type statement
     - match: '{{b_l}}(type)\s+({{yang_types}})\s*[{|;]'
       scope: meta.statement.type.yang
@@ -162,10 +157,7 @@ contexts:
         1: keyword.operator.type.yang
         2: storage.type.yang
 
-    #
-    # other
-    #
-
+  other:
     # Yang-version statement
     - match: '{{b_l}}(yang-version)\s+(\".*\")\s*;'
       scope: meta.statement.yang-version.yang
@@ -509,10 +501,7 @@ contexts:
         1: keyword.other.yang
         2: constant.language.boolean.yang
 
-    #
-    # Constants
-    #
-
+  constants:
     # Integer constants
     - match: '(?<![\w\-\+])([\+\-])?0x\d+\b'
       scope: constant.numeric.integer.hexadecimal.yang
