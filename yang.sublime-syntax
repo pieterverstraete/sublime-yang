@@ -293,14 +293,14 @@ contexts:
         2: constant.language.boolean.yang
 
     # Min-elements statement
-    - match: '{{b_l}}(min-elements)\s+(\d)\s*;'
+    - match: '{{b_l}}(min-elements)\s+(\d+)\s*;'
       scope: meta.statement.min-elements.yang
       captures:
         1: keyword.other.yang
         2: constant.numeric.integer.yang
 
     # Max-elements statement
-    - match: '{{b_l}}(max-elements)\s+(\d|\"unbounded\")\s*;'
+    - match: '{{b_l}}(max-elements)\s+(\d+|\"unbounded\")\s*;'
       scope: meta.statement.max-elements.yang
       captures:
         1: keyword.other.yang
@@ -447,7 +447,7 @@ contexts:
         2: string.yang
 
     # Fraction-digits statement
-    - match: '{{b_l}}(fraction-digits)\s+(\d)'
+    - match: '{{b_l}}(fraction-digits)\s+(\d+)'
       scope: meta.statement.fraction-digits.yang
       captures:
         1: keyword.other.yang
@@ -475,7 +475,7 @@ contexts:
         2: string.yang
 
     # Value statement
-    - match: '{{b_l}}(value)\s+(\d)\s*[;|{]'
+    - match: '{{b_l}}(value)\s+(\d+)\s*[;|{]'
       scope: meta.statement.value.yang
       captures:
         1: keyword.other.yang
@@ -489,7 +489,7 @@ contexts:
         2: string.yang
 
     # Position statement
-    - match: '{{b_l}}(position)\s+(\d)\s*;'
+    - match: '{{b_l}}(position)\s+(\d+)\s*;'
       scope: meta.statement.position.yang
       captures:
         1: keyword.other.yang
