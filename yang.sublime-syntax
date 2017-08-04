@@ -187,7 +187,7 @@ contexts:
         2: string.yang
 
     # Revision-date statement
-    - match: '{{b_l}}(import)\s+(\".*\")\s*;'
+    - match: '{{b_l}}(revision-date)\s+(\".*\")\s*;'
       scope: meta.statement.revision-date.yang
       captures:
         1: keyword.other.yang
