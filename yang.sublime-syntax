@@ -18,11 +18,7 @@ variables:
 contexts:
   main:
     - include: comments
-    - include: entities
-    - include: variables
-    - include: storage
-    - include: other
-    - include: constants
+    - include: statements
 
   comments:
     # Line comments begin with a '//' and finish at the end of the line
@@ -35,119 +31,162 @@ contexts:
       scope: punctuation.definition.comment.yang
       push: block_comment
 
-  entities:
-    # Module statement
-    - match: '{{b_l}}(module)\s+({{ident}})\s*{'
-      scope: meta.statement.module.yang
-      captures:
-        1: keyword.other.module.yang
-        2: entity.name.module.yang
+  statements:
+    - match: '{{b_l}}(module){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_module
+    - match: '{{b_l}}(submodule){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_submodule
+    - match: '{{b_l}}(typedef){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_typedef
+    - match: '{{b_l}}(container){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_container
+    - match: '{{b_l}}(leaf){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_leaf
+    - match: '{{b_l}}(leaf-list){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_leaf-list
+    - match: '{{b_l}}(list){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_list
+    - match: '{{b_l}}(grouping){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_grouping
+    - match: '{{b_l}}(choice){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_choice
+    - match: '{{b_l}}(anyxml){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_anyxml
+    - match: '{{b_l}}(uses){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_uses
+    - match: '{{b_l}}(rpc){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_rpc
+    - match: '{{b_l}}(notification){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_notification
+    - match: '{{b_l}}(augment){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_augment
+    - match: '{{b_l}}(identity){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_identity
+    - match: '{{b_l}}(extension){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_extension
 
-    # Subodule statement
-    - match: '{{b_l}}(submodule)\s+({{ident}})\s*{'
-      scope: meta.statement.submodule.yang
+  stmt_module:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.submodule.yang
-        2: entity.name.submodule.yang
+        1: entity.name.module.yang
+      set: stmt_end
 
-    # Typedef statement
-    - match: '{{b_l}}(typedef)\s+({{ident}})\s*{'
-      scope: meta.statement.typedef.yang
+  stmt_submodule:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.typedef.yang
-        2: entity.name.type.yang
+        1: entity.name.submodule.yang
+      set: stmt_end
 
-    # Container statement
-    - match: '{{b_l}}(container)\s+({{ident}})\s*{'
-      scope: meta.statement.container.yang
+  stmt_typedef:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.container.yang
-        2: entity.name.container.yang
+        1: entity.name.type.yang
+      set: stmt_end
 
-    # Leaf statement
-    - match: '{{b_l}}(leaf)\s+({{ident}})\s*{'
-      scope: meta.statement.leaf.yang
+  stmt_container:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.leaf.yang
-        2: entity.name.leaf.yang
+        1: entity.name.container.yang
+      set: stmt_end
 
-    # Leaf-list statement
-    - match: '{{b_l}}(leaf-list)\s+({{ident}})\s*{'
-      scope: meta.statement.leaf-list.yang
+  stmt_leaf:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.leaf-list.yang
-        2: entity.name.leaf-list.yang
+        1: entity.name.leaf.yang
+      set: stmt_end
 
-    # List statement
-    - match: '{{b_l}}(list)\s+({{ident}})\s*{'
-      scope: meta.statement.list.yang
+  stmt_leaf-list:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.list.yang
-        2: entity.name.list.yang
+        1: entity.name.leaf-list.yang
+      set: stmt_end
 
-    # Grouping statement
-    - match: '{{b_l}}(grouping)\s+({{ident}})\s*{'
-      scope: meta.statement.grouping.yang
+  stmt_list:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.grouping.yang
-        2: entity.name.grouping.yang
+        1: entity.name.list.yang
+      set: stmt_end
 
-  variables:
-    # Choice statement
-    - match: '{{b_l}}(choice)\s+({{ident}})\s*{'
-      scope: meta.statement.choice.yang
+  stmt_grouping:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.choice.yang
-        2: variable.parameter.yang
+        1: entity.name.grouping.yang
+      set: stmt_end
 
-    # Anyxml statement
-    - match: '{{b_l}}(anyxml)\s+({{ident}})\s*{'
-      scope: meta.statement.anyxml.yang
+  stmt_choice:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.anyxml.yang
-        2: variable.parameter.yang
+        1: variable.parameter.yang
+      set: stmt_end
 
-    # Uses statement
-    - match: '{{b_l}}(uses)\s+({{ident}})\s*[{|;]'
-      scope: meta.statement.uses.yang
+  stmt_anyxml:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.uses.yang
-        2: variable.parameter.yang
+        1: variable.parameter.yang
+      set: stmt_end
 
-    # Rpc statement
-    - match: '{{b_l}}(rpc)\s+({{ident}})\s*[{|;]'
-      scope: meta.statement.rpc.yang
+  stmt_uses:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.rpc.yang
-        2: variable.parameter.yang
+        1: variable.parameter.yang
+      set: stmt_end
 
-    # Notification statement
-    - match: '{{b_l}}(notification)\s+({{ident}})\s*[{|;]'
-      scope: meta.statement.notification.yang
+  stmt_rpc:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.notification.yang
-        2: variable.parameter.yang
+        1: variable.parameter.yang
+      set: stmt_end
 
-    # Augment statement
-    - match: '{{b_l}}(augment)\s+({{ident}})\s*[{|;]'
-      scope: meta.statement.augment.yang
+  stmt_notification:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.augment.yang
-        2: variable.parameter.yang
+        1: variable.parameter.yang
+      set: stmt_end
 
-    # Identity statement
-    - match: '{{b_l}}(identity)\s+({{ident}})\s*[{|;]'
-      scope: meta.statement.identity.yang
+  stmt_augment:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.identity.yang
-        2: variable.parameter.yang
+        1: variable.parameter.yang
+      set: stmt_end
 
-    # Extension statement
-    - match: '{{b_l}}(extension)\s+({{ident}})\s*[{|;]'
-      scope: meta.statement.extension.yang
+  stmt_identity:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
       captures:
-        1: keyword.other.extension.yang
-        2: variable.parameter.yang
+        1: variable.parameter.yang
+      set: stmt_end
+
+  stmt_extension:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
+      captures:
+        1: variable.parameter.yang
+      set: stmt_end
+
+  stmt_end:
+    - match: ';'
+      scope: punctuation.terminator.yang
+      pop: true
+    - match: '{'
+      scope: punctuation.terminator.yang
+      pop: true
+
+
+
 
   storage:
     # Type statement
@@ -222,7 +261,7 @@ contexts:
         2: string.yang
 
     # Description statement
-    - match: '{{b_l}}(description)\s+(\".*\")\s*;'
+    - match: '{{b_l}}(description)\s+(\"[.\n]*\")\s*;'
       scope: meta.statement.description.yang
       captures:
         1: keyword.other.yang
