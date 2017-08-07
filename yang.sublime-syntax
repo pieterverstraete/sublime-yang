@@ -16,8 +16,11 @@ variables:
   #custom_keyword: '({{ident}}:{{ident}})'
   unq_string: '[^\s;{}(\/\/)(\/\*)(\*\/)]+'
 contexts:
-  main:
+  prototype:
     - include: comments
+    - include: stmt_end
+
+  main:
     - include: statements
 
   comments:
@@ -665,17 +668,20 @@ contexts:
     #   scope: string.unquoted.yang
 
   line_comment:
+    - meta_include_prototype: false
     - meta_scope: comment.line.yang
     - match: $
       pop: true
 
   block_comment:
+    - meta_include_prototype: false
     - meta_scope: comment.block.yang
     - match: '\*/'
       scope: punctuation.definition.comment.yang
       pop: true
 
   double_quoted_string:
+    - meta_include_prototype: false
     - meta_scope: string.quoted.double.yang
     # Special characters can be introduced using '\'
     - match: '\\[n|t|"|\\]'
@@ -685,6 +691,7 @@ contexts:
       pop: true
 
   single_quoted_string:
+    - meta_include_prototype: false
     - meta_scope: string.quoted.single.yang
     # No special characters are allowed
     - match: "'"
