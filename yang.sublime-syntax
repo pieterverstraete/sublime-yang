@@ -7,8 +7,8 @@ file_extensions:
 scope: source.yang
 variables:
   ident: '[a-zA-Z_][a-zA-Z0-9_\.\-]*'
-  b_l: '(?<![-\w])'
-  b_r: '(?![-\w])'
+  b_l: '(?<![-:\w])'
+  b_r: '(?![-:\w])'
   int_types: '(int8|int16|int32|int64|uint8|uint16|uint32|uint64)'
   yang_types: '({{int_types}}|decimal64|string|boolean|enumeration|bits|binary|leafref|identityref|empty|union|instance-identifier)'
 
