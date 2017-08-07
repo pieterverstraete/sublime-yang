@@ -80,6 +80,153 @@ contexts:
     - match: '{{b_l}}(extension){{b_r}}'
       scope: keyword.other.yang
       set: stmt_extension
+    - match: '{{b_l}}(type){{b_r}}'
+      scope: keyword.operator.type.yang
+      set: stmt_type
+    - match: '{{b_l}}(yang-version){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_yang-version
+    - match: '{{b_l}}(namespace){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_namespace
+    - match: '{{b_l}}(prefix){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_prefix
+    - match: '{{b_l}}(import){{b_r}}'
+      scope: keyword.control.import.yang
+      set: stmt_import
+    - match: '{{b_l}}(revision-date){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_revision-date
+    - match: '{{b_l}}(include){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_include
+    - match: '{{b_l}}(organization){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_organization
+    - match: '{{b_l}}(contact)'
+      scope: keyword.other.yang
+      set: stmt_contact
+    - match: '{{b_l}}(revision){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_revision
+    - match: '{{b_l}}(description){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_description
+    - match: '{{b_l}}(belongs-to){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_belongs-to
+    - match: '{{b_l}}(units){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_units
+    - match: '{{b_l}}(default){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_default
+    - match: '{{b_l}}(must){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_must
+    - match: '{{b_l}}(error-message){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_error-message
+    - match: '{{b_l}}(error-app-tag){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_error-app-tag
+    - match: '{{b_l}}(presence){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_presence
+    - match: '{{b_l}}(mandatory){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_mandatory
+    - match: '{{b_l}}(min-elements){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_min-elements
+    - match: '{{b_l}}(max-elements){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_max-elements
+    - match: '{{b_l}}(ordered-by){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_ordered-by
+    - match: '{{b_l}}(key){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_key
+    - match: '{{b_l}}(unique){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_unique
+    - match: '{{b_l}}(case){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_case
+    - match: '{{b_l}}(refine){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_refine
+    - match: '{{b_l}}(input){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_input
+    - match: '{{b_l}}(output){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_output
+    - match: '{{b_l}}(base){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_base
+    - match: '{{b_l}}(argument){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_argument
+    - match: '{{b_l}}(yin-element){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_yin-element
+    - match: '{{b_l}}(feature){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_feature
+    - match: '{{b_l}}(if-feature){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_if-feature
+    - match: '{{b_l}}(deviation){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_deviation
+    - match: '{{b_l}}(deviate){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_deviate
+    - match: '{{b_l}}(config){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_config
+    - match: '{{b_l}}(status){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_status
+    - match: '{{b_l}}(reference){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_reference
+    - match: '{{b_l}}(when){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_when
+    - match: '{{b_l}}(range){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_range
+    - match: '{{b_l}}(fraction-digits){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_fraction-digits
+    - match: '{{b_l}}(length){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_length
+    - match: '{{b_l}}(pattern){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_pattern
+    - match: '{{b_l}}(enum){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_enum
+    - match: '{{b_l}}(value){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_value
+    - match: '{{b_l}}(bit){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_bit
+    - match: '{{b_l}}(position){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_position
+    - match: '{{b_l}}(path){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_path
+    - match: '{{b_l}}(require-instance){{b_r}}'
+      scope: keyword.other.yang
+      set: stmt_require-instance
 
   stmt_module:
     - match: '{{b_l}}({{ident}}){{b_r}}'
@@ -177,6 +324,300 @@ contexts:
         1: variable.parameter.yang
       set: stmt_end
 
+  stmt_type:
+    - match: '{{b_l}}({{yang_types}}){{b_r}}'
+      captures:
+        1: storage.type.yang
+      set: stmt_end
+
+  stmt_yang-version:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_namespace:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: entity.name.namespace
+      set: stmt_end
+
+  stmt_prefix:
+    - match: '{{b_l}}(\"{{ident}}\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_import:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_revision-date:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_include:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_organization:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_contact:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_revision:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_description:
+    - match: '{{b_l}}(\"[.\n]*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_belongs-to:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_units:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_default:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_must:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_error-message:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_error-app-tag:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_presence:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_mandatory:
+    - match: '{{b_l}}(true|false){{b_r}}'
+      captures:
+        1: constant.language.boolean.yang
+      set: stmt_end
+
+  stmt_min-elements:
+    - match: '{{b_l}}(\d+){{b_r}}'
+      captures:
+        1: constant.numeric.integer.yang
+      set: stmt_end
+
+  stmt_max-elements:
+    - match: '{{b_l}}(\d+|\"unbounded\"){{b_r}}'
+      captures:
+        1: constant.numeric.integer.yang
+      set: stmt_end
+
+  stmt_ordered-by:
+    - match: '{{b_l}}(system|user){{b_r}}'
+      captures:
+        1: constant.language.yang
+      set: stmt_end
+
+  stmt_key:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_unique:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_case:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_refine:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_input:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_output:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_base:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_argument:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_yin-element:
+    - match: '{{b_l}}(true|false){{b_r}}'
+      captures:
+        1: constant.language.boolean.yang
+      set: stmt_end
+
+  stmt_feature:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_if-feature:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_deviation:
+    - match: '{{b_l}}(\".*\"){'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_deviate:
+    - match: '{{b_l}}(not-supported|add|replace|delete){{b_r}}'
+      captures:
+        1: constant.language.yang
+      set: stmt_end
+
+  stmt_config:
+    - match: '{{b_l}}(true|false){{b_r}}'
+      captures:
+        1: constant.language.boolean.yang
+      set: stmt_end
+
+  stmt_status:
+    - match: '{{b_l}}(current|deprecated|obsolete){{b_r}}'
+      captures:
+        1: constant.language.yang
+      set: stmt_end
+
+  stmt_reference:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_when:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_range:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_fraction-digits:
+    - match: '{{b_l}}(\d+)'
+      captures:
+        1: constant.numeric.integer.yang
+      set: stmt_end
+
+  stmt_length:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_pattern:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_enum:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_value:
+    - match: '{{b_l}}(\d+){{b_r}}'
+      captures:
+        1: constant.numeric.integer.yang
+      set: stmt_end
+
+  stmt_bit:
+    - match: '{{b_l}}({{ident}}){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_position:
+    - match: '{{b_l}}(\d+){{b_r}}'
+      captures:
+        1: constant.numeric.integer.yang
+      set: stmt_end
+
+  stmt_path:
+    - match: '{{b_l}}(\".*\"){{b_r}}'
+      captures:
+        1: string.yang
+      set: stmt_end
+
+  stmt_require-instance:
+    - match: '{{b_l}}(true|false){{b_r}}'
+      captures:
+        1: constant.language.boolean.yang
+      set: stmt_end
+
   stmt_end:
     - match: ';'
       scope: punctuation.terminator.yang
@@ -184,361 +625,6 @@ contexts:
     - match: '{'
       scope: punctuation.terminator.yang
       pop: true
-
-
-
-
-  storage:
-    # Type statement
-    - match: '{{b_l}}(type)\s+({{yang_types}})\s*[{|;]'
-      scope: meta.statement.type.yang
-      captures:
-        1: keyword.operator.type.yang
-        2: storage.type.yang
-
-  other:
-    # Yang-version statement
-    - match: '{{b_l}}(yang-version)\s+(\".*\")\s*;'
-      scope: meta.statement.yang-version.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Namespace statement
-    - match: '{{b_l}}(namespace)\s+(\".*\")\s*;'
-      scope: meta.statement.namespace.yang
-      captures:
-        1: keyword.other.yang
-        2: entity.name.namespace
-
-    # Prefix statement
-    - match: '{{b_l}}(prefix)\s+(\"{{ident}}\")\s*;'
-      scope: meta.statement.prefix.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Import statement
-    - match: '{{b_l}}(import)\s+({{ident}})\s+{'
-      scope: meta.statement.import.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Revision-date statement
-    - match: '{{b_l}}(revision-date)\s+(\".*\")\s*;'
-      scope: meta.statement.revision-date.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Include statement
-    - match: '{{b_l}}(include)\s+({{ident}})\s*;'
-      scope: meta.statement.include.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Organization statement
-    - match: '{{b_l}}(organization)\s+(\".*\")\s*;'
-      scope: meta.statement.organization.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Contact statement
-    - match: '{{b_l}}(contact)\s+(\".*\")\s*;'
-      scope: meta.statement.contact.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Revision statement
-    - match: '{{b_l}}(revision)\s+(\".*\")\s*[;|{]'
-      scope: meta.statement.revision.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Description statement
-    - match: '{{b_l}}(description)\s+(\"[.\n]*\")\s*;'
-      scope: meta.statement.description.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Belongs-to statement
-    - match: '{{b_l}}(belongs-to)\s+({{ident}})\s+{'
-      scope: meta.statement.belongs-to.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Units statement
-    - match: '{{b_l}}(units)\s+(\".*\")\s*;'
-      scope: meta.statement.units.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Default statment
-    - match: '{{b_l}}(default)\s+(\".*\")\s*;'
-      scope: meta.statement.default.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Must statement
-    - match: '{{b_l}}(must)\s+(\".*\")\s*[;|{]'
-      scope: meta.statement.must.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Error-message statement
-    - match: '{{b_l}}(error-message)\s+(\".*\")\s*;'
-      scope: meta.statement.error-message.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Error-app-tag statement
-    - match: '{{b_l}}(error-app-tag)\s+(\".*\")\s*;'
-      scope: meta.statement.error-app-tag.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Presence statement
-    - match: '{{b_l}}(presence)\s+(\".*\")\s*;'
-      scope: meta.statement.presence.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Mandatory statement
-    - match: '{{b_l}}(mandatory)\s+(true|false)\s*;'
-      scope: meta.statement.mandatory.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.language.boolean.yang
-
-    # Min-elements statement
-    - match: '{{b_l}}(min-elements)\s+(\d+)\s*;'
-      scope: meta.statement.min-elements.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.numeric.integer.yang
-
-    # Max-elements statement
-    - match: '{{b_l}}(max-elements)\s+(\d+|\"unbounded\")\s*;'
-      scope: meta.statement.max-elements.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.numeric.integer.yang
-
-    # Ordered-by statement
-    - match: '{{b_l}}(ordered-by)\s+(system|user)\s*;'
-      scope: meta.statement.ordered-by.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.language.yang
-
-    # Key statement
-    - match: '{{b_l}}(key)\s+(\".*\")\s*;'
-      scope: meta.statement.key.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Unique statement
-    - match: '{{b_l}}(unique)\s+(\".*\")\s*;'
-      scope: meta.statement.unique.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Case statement
-    - match: '{{b_l}}(case)\s+({{ident}})\s+{'
-      scope: meta.statement.case.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Any-xml statement
-    - match: '{{b_l}}(any-xml)\s+({{ident}})\s+{'
-      scope: meta.statement.any-xml.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Refine statement
-    - match: '{{b_l}}(refine)\s+(\".*\")\s+{'
-      scope: meta.statement.refine.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Input statement
-    - match: '{{b_l}}(input)\s+{'
-      scope: meta.statement.input.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Output statement
-    - match: '{{b_l}}(output)\s+{'
-      scope: meta.statement.output.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Base statement
-    - match: '{{b_l}}(base)\s+(\".*\")\s*;'
-      scope: meta.statement.base.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Argument statement
-    - match: '{{b_l}}(argument)\s+(\".*\")\s+{'
-      scope: meta.statement.argument.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Yin-element statement
-    - match: '{{b_l}}(yin-element)\s+(true|false)\s*;'
-      scope: meta.statement.yin-element.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.language.boolean.yang
-
-    # Feature statement
-    - match: '{{b_l}}(feature)\s+({{ident}})\s+{'
-      scope: meta.statement.feature.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # If-feature statement
-    - match: '{{b_l}}(if-feature)\s+({{ident}})\s*;'
-      scope: meta.statement.if-feature.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Deviation statement
-    - match: '{{b_l}}(deviation)\s+(\".*\")\s+{'
-      scope: meta.statement.deviation.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Deviate statement
-    - match: '{{b_l}}(deviate)\s+(not-supported|add|replace|delete)\s*;'
-      scope: meta.statement.deviate.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.language.yang
-
-    # Config statement
-    - match: '{{b_l}}(config)\s+(true|false)\s*;'
-      scope: meta.statement.config.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.language.boolean.yang
-
-    # Status statement
-    - match: '{{b_l}}(status)\s+(current|deprecated|obsolete)\s*;'
-      scope: meta.statement.status.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.language.yang
-
-    # Reference statement
-    - match: '{{b_l}}(reference)\s+(\".*\")\s*;'
-      scope: meta.statement.reference.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # When statement
-    - match: '{{b_l}}(when)\s+(\".*\")\s*;'
-      scope: meta.statement.when.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Range statement
-    - match: '{{b_l}}(range)\s+(\".*\")\s*[;|{]'
-      scope: meta.statement.range.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Fraction-digits statement
-    - match: '{{b_l}}(fraction-digits)\s+(\d+)'
-      scope: meta.statement.fraction-digits.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.numeric.integer.yang
-
-    # Length statement
-    - match: '{{b_l}}(length)\s+(\".*\")\s*[;|{]'
-      scope: meta.statement.length.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Pattern statement
-    - match: '{{b_l}}(pattern)\s+(\".*\")\s*[;|{]'
-      scope: meta.statement.pattern.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Enum statement
-    - match: '{{b_l}}(enum)\s+(\".*\")\s*[;|{]'
-      scope: meta.statement.enum.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Value statement
-    - match: '{{b_l}}(value)\s+(\d+)\s*[;|{]'
-      scope: meta.statement.value.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.numeric.integer.yang
-
-    # Bit statement
-    - match: '{{b_l}}(bit)\s+({{ident}})\s*[;|{]'
-      scope: meta.statement.bit.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Position statement
-    - match: '{{b_l}}(position)\s+(\d+)\s*;'
-      scope: meta.statement.position.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.numeric.integer.yang
-
-    # Path statement
-    - match: '{{b_l}}(path)\s+(\".*\")\s*;'
-      scope: meta.statement.path.yang
-      captures:
-        1: keyword.other.yang
-        2: string.yang
-
-    # Require-instance statement
-    - match: '{{b_l}}(require-instance)\s+(true|false)\s*;'
-      scope: meta.statement.require-instance.yang
-      captures:
-        1: keyword.other.yang
-        2: constant.language.boolean.yang
 
   constants:
     # Integer constants
