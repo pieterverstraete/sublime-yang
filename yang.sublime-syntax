@@ -9,11 +9,17 @@ variables:
   ident: '[a-zA-Z_][a-zA-Z0-9_\.\-]*'
   b_l: '(?<![-:\w])'
   b_r: '(?![-:\w])'
+  non_zero_digit: '(1|2|3|4|5|6|7|8|9)'
+  pos_int: '{{non_zero_digit}}[\d]*'
+  non_neg_int: '(0|{{pos_int}})'
+  int: ([\-]?{{non_neg_int}})
+  desc_schema_nodeid: '{{ident}}(\/{{ident}})*'
+  abs_path: '(\/{{ident}})+'
+  rel_path: '(\.\.\/)+{{ident}}{{abs_path}}'
   int_types: '(int8|int16|int32|int64|uint8|uint16|uint32|uint64)'
   yang_types: '({{int_types}}|decimal64|string|boolean|enumeration|bits|binary|leafref|identityref|empty|union|instance-identifier)'
 
   yang_lang_const: '(true|false|current|deprecated|obsolete|not-supported|add|replace|delete|unbounded|system|user|min|max)'
-  #custom_keyword: '({{ident}}:{{ident}})'
   unq_string: '[^\s;{}(\/\/)(\/\*)(\*\/)]+'
 contexts:
   prototype:
@@ -37,597 +43,388 @@ contexts:
   statements:
     - match: '{{b_l}}(module){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_module
+      set:
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          captures:
+            1: entity.name.module.yang
+          set: stmt_end
     - match: '{{b_l}}(submodule){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_submodule
+      set:
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          captures:
+            1: entity.name.submodule.yang
+          set: stmt_end
     - match: '{{b_l}}(typedef){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_typedef
+      set:
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          captures:
+            1: entity.name.type.yang
+          set: stmt_end
     - match: '{{b_l}}(container){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_container
+      set:
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          captures:
+            1: entity.name.container.yang
+          set: stmt_end
     - match: '{{b_l}}(leaf){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_leaf
+      set:
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          captures:
+            1: entity.name.leaf.yang
+          set: stmt_end
     - match: '{{b_l}}(leaf-list){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_leaf-list
+      set:
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          captures:
+            1: entity.name.leaf-list.yang
+          set: stmt_end
     - match: '{{b_l}}(list){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_list
+      set:
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          captures:
+            1: entity.name.list.yang
+          set: stmt_end
     - match: '{{b_l}}(grouping){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_grouping
+      set:
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          captures:
+            1: entity.name.grouping.yang
+          set: stmt_end
     - match: '{{b_l}}(choice){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_choice
+      set: stmt_arg_identifier
     - match: '{{b_l}}(anyxml){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_anyxml
+      set: stmt_arg_identifier
     - match: '{{b_l}}(uses){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_uses
+      set:
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          captures:
+            1: variable.parameter.yang
+          set: stmt_end
     - match: '{{b_l}}(rpc){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_rpc
+      set: stmt_arg_identifier
     - match: '{{b_l}}(notification){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_notification
+      set: stmt_arg_identifier
     - match: '{{b_l}}(augment){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_augment
+      set: stmt_arg_identifier
     - match: '{{b_l}}(identity){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_identity
+      set: stmt_arg_identifier
     - match: '{{b_l}}(extension){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_extension
+      set: stmt_arg_identifier
     - match: '{{b_l}}(type){{b_r}}'
       scope: keyword.operator.type.yang
-      set: stmt_type
+      set:
+        - match: '{{b_l}}(({{ident}})(:)({{ident}}))|({{yang_types}}){{b_r}}'
+          captures:
+            2: entity.name.namespace.yang
+            3: punctuation.accessor.colon.yang
+            4: storage.type.custom.yang
+            5: storage.type.yang
+          set: stmt_end
     - match: '{{b_l}}(yang-version){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_yang-version
+      set: stmt_arg_string
     - match: '{{b_l}}(namespace){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_namespace
+      set:
+        - match: '{{b_l}}(\".*\"){{b_r}}'
+          captures:
+            1: entity.name.namespace.yang
+          set: stmt_end
     - match: '{{b_l}}(prefix){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_prefix
+      set:
+        - match: '{{b_l}}(\"{{ident}}\"){{b_r}}'
+          captures:
+            1: string.yang
+          set: stmt_end
     - match: '{{b_l}}(import){{b_r}}'
       scope: keyword.control.import.yang
-      set: stmt_import
+      set: stmt_arg_identifier
     - match: '{{b_l}}(revision-date){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_revision-date
+      set: stmt_arg_string
     - match: '{{b_l}}(include){{b_r}}'
-      scope: keyword.other.yang
-      set: stmt_include
+      scope: keyword.control.import.yang
+      set: stmt_arg_identifier
     - match: '{{b_l}}(organization){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_organization
+      set: stmt_arg_string
     - match: '{{b_l}}(contact)'
       scope: keyword.other.yang
-      set: stmt_contact
+      set: stmt_arg_string
     - match: '{{b_l}}(revision){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_revision
+      set: stmt_arg_string
     - match: '{{b_l}}(description){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_description
+      set: stmt_arg_string
     - match: '{{b_l}}(belongs-to){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_belongs-to
+      set: stmt_arg_identifier
     - match: '{{b_l}}(units){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_units
+      set: stmt_arg_string
     - match: '{{b_l}}(default){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_default
+      set:
+        - match: '"'
+          push: double_quoted_string
+        - match: '{{b_l}}({{int}}){{b_r}}'
+          captures:
+            1: constant.numeric.integer.yang
+          set: stmt_end
+        - match: '{{b_l}}(true|false){{b_r}}'
+          captures:
+            1: constant.language.boolean.yang
+          set: stmt_end
+        - match: '{{b_l}}({{ident}}){{b_r}}'
+          set: stmt_end
     - match: '{{b_l}}(must){{b_r}}'
       scope: keyword.other.yang
       set: stmt_must
     - match: '{{b_l}}(error-message){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_error-message
+      set: stmt_arg_string
     - match: '{{b_l}}(error-app-tag){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_error-app-tag
+      set: stmt_arg_string
     - match: '{{b_l}}(presence){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_presence
+      set: stmt_arg_string
     - match: '{{b_l}}(mandatory){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_mandatory
+      set: stmt_arg_const_bool
     - match: '{{b_l}}(min-elements){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_min-elements
+      set:
+        - match: '{{b_l}}({{non_neg_int}}){{b_r}}'
+          captures:
+            1: constant.numeric.integer.yang
+          set: stmt_end
     - match: '{{b_l}}(max-elements){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_max-elements
+      set:
+        - match: '{{b_l}}({{pos_int}}){{b_r}}'
+          captures:
+            1: constant.numeric.integer.yang
+          set: stmt_end
+        - match: '{{b_l}}(unbounded){{b_r}}'
+          captures:
+            1: constant.language.yang
+          set: stmt_end
+        - match: '{{b_l}}(\"(unbounded)\"){{b_r}}'
+          captures:
+            2: constant.language.yang
+          set: stmt_end
     - match: '{{b_l}}(ordered-by){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_ordered-by
+      set:
+        - match: '{{b_l}}(system|user){{b_r}}'
+          captures:
+            1: constant.language.yang
+          set: stmt_end
     - match: '{{b_l}}(key){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_key
+      set:
+        - match: '{{b_l}}(\"{{ident}}(\s+{{ident}})*\"){{b_r}}'
+          set: stmt_end
     - match: '{{b_l}}(unique){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_unique
+      set:
+        - match: '{{b_l}}(\"({{desc_schema_nodeid}})(\s+({{desc_schema_nodeid}}))*\"){{b_r}}'
+          set: stmt_end
     - match: '{{b_l}}(case){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_case
+      set: stmt_arg_identifier
     - match: '{{b_l}}(refine){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_refine
+      set:
+        - match: '{{b_l}}(\"{{ident}}\"){{b_r}}'
+          set: stmt_end
+    # input statement does not take an argument
     - match: '{{b_l}}(input){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_input
+    # output statement does not take an argument
     - match: '{{b_l}}(output){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_output
     - match: '{{b_l}}(base){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_base
+      set:
+        - match: '{{b_l}}"(({{ident}})(:))?({{ident}})"{{b_r}}'
+          set: stmt_end
     - match: '{{b_l}}(argument){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_argument
+      set: stmt_arg_identifier_string
     - match: '{{b_l}}(yin-element){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_yin-element
+      set: stmt_arg_const_bool
     - match: '{{b_l}}(feature){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_feature
+      set: stmt_arg_identifier
     - match: '{{b_l}}(if-feature){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_if-feature
+      set: stmt_arg_identifier
     - match: '{{b_l}}(deviation){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_deviation
+      set:
+        - match: '{{b_l}}(\"{{ident}}\"){{b_r}}'
+          set: stmt_end
     - match: '{{b_l}}(deviate){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_deviate
+      set:
+        - match: '{{b_l}}(not-supported|add|replace|delete){{b_r}}'
+          captures:
+            1: constant.language.yang
+          set: stmt_end
     - match: '{{b_l}}(config){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_config
+      set: stmt_arg_const_bool
     - match: '{{b_l}}(status){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_status
+      set:
+        - match: '{{b_l}}(current|deprecated|obsolete){{b_r}}'
+          captures:
+            1: constant.language.yang
+          set: stmt_end
     - match: '{{b_l}}(reference){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_reference
+      set: stmt_arg_string
     - match: '{{b_l}}(when){{b_r}}'
       scope: keyword.other.yang
       set: stmt_when
     - match: '{{b_l}}(range){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_range
+      set: stmt_arg_range
     - match: '{{b_l}}(fraction-digits){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_fraction-digits
+      set:
+        - match: '{{b_l}}(1[0-8]?|2|3|4|5|6|7|8|9){{b_r}}'
+          captures:
+            1: constant.numeric.integer.yang
+          set: stmt_end
     - match: '{{b_l}}(length){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_length
+      set: stmt_arg_range
     - match: '{{b_l}}(pattern){{b_r}}'
       scope: keyword.other.yang
       set: stmt_pattern
     - match: '{{b_l}}(enum){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_enum
+      set:
+        - match: '{{b_l}}\"{{ident}}\"{{b_r}}'
+          set: stmt_end
+        - match: '{{b_l}}{{ident}}{{b_r}}'
+          set: stmt_end
     - match: '{{b_l}}(value){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_value
+      set:
+        - match: '{{b_l}}({{int}}){{b_r}}'
+          captures:
+            1: constant.numeric.integer.yang
+          set: stmt_end
     - match: '{{b_l}}(bit){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_bit
+      set: stmt_arg_identifier
     - match: '{{b_l}}(position){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_position
+      set:
+        - match: '{{b_l}}({{non_neg_int}}){{b_r}}'
+          captures:
+            1: constant.numeric.integer.yang
+          set: stmt_end
     - match: '{{b_l}}(path){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_path
+      set:
+        - match: '{{b_l}}(\"(({{abs_path}})|({{rel_path}}))\"){{b_r}}'
+          set: stmt_end
     - match: '{{b_l}}(require-instance){{b_r}}'
       scope: keyword.other.yang
-      set: stmt_require-instance
-
-  stmt_module:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
+      set: stmt_arg_const_bool
+    - match: '{{b_l}}({{ident}})(:)({{ident}}){{b_r}}'
+      scope: meta.path.yang
       captures:
-        1: entity.name.module.yang
-      set: stmt_end
+        1: entity.name.namespace.yang
+        2: punctuation.accessor.colon.yang
+        3: keyword.other.yang
+      set: stmt_arg_custom
 
-  stmt_submodule:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: entity.name.submodule.yang
-      set: stmt_end
-
-  stmt_typedef:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: entity.name.type.yang
-      set: stmt_end
-
-  stmt_container:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: entity.name.container.yang
-      set: stmt_end
-
-  stmt_leaf:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: entity.name.leaf.yang
-      set: stmt_end
-
-  stmt_leaf-list:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: entity.name.leaf-list.yang
-      set: stmt_end
-
-  stmt_list:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: entity.name.list.yang
-      set: stmt_end
-
-  stmt_grouping:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: entity.name.grouping.yang
-      set: stmt_end
-
-  stmt_choice:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: variable.parameter.yang
-      set: stmt_end
-
-  stmt_anyxml:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: variable.parameter.yang
-      set: stmt_end
-
-  stmt_uses:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: variable.parameter.yang
-      set: stmt_end
-
-  stmt_rpc:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: variable.parameter.yang
-      set: stmt_end
-
-  stmt_notification:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: variable.parameter.yang
-      set: stmt_end
-
-  stmt_augment:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: variable.parameter.yang
-      set: stmt_end
-
-  stmt_identity:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: variable.parameter.yang
-      set: stmt_end
-
-  stmt_extension:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: variable.parameter.yang
-      set: stmt_end
-
-  stmt_type:
-    - match: '{{b_l}}({{yang_types}}){{b_r}}'
-      captures:
-        1: storage.type.yang
-      set: stmt_end
-
-  stmt_yang-version:
+  stmt_must: # seperate syntax
     - match: '{{b_l}}(\".*\"){{b_r}}'
       captures:
         1: string.yang
       set: stmt_end
 
-  stmt_namespace:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: entity.name.namespace
-      set: stmt_end
-
-  stmt_prefix:
-    - match: '{{b_l}}(\"{{ident}}\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_import:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_revision-date:
+  stmt_when: # seperate syntax
     - match: '{{b_l}}(\".*\"){{b_r}}'
       captures:
         1: string.yang
       set: stmt_end
 
-  stmt_include:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_organization:
+  stmt_pattern: # seperate syntax
     - match: '{{b_l}}(\".*\"){{b_r}}'
       captures:
         1: string.yang
       set: stmt_end
 
-  stmt_contact:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
 
-  stmt_revision:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
 
-  stmt_description:
-    - match: '{{b_l}}(\"[.\n]*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
 
-  stmt_belongs-to:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
+  stmt_arg_custom:
+    - include: stmt_arg_string
 
-  stmt_units:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
+  stmt_arg_range:
+    - match: '{{b_l}}((\d+)|(min|max))((\.\.)((\d+)|(min|max)))?{{b_r}}'
       captures:
-        1: string.yang
-      set: stmt_end
+        2: constant.numeric.integer.yang
+        3: constant.language.yang
+        5: keyword.operator.yang
+        7: constant.numeric.integer.yang
+        8: constant.language.yang
+    - match: '\|'
+      scope: keyword.operator.logical.yang
 
-  stmt_default:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_must:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_error-message:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_error-app-tag:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_presence:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_mandatory:
+  stmt_arg_const_bool:
     - match: '{{b_l}}(true|false){{b_r}}'
       captures:
         1: constant.language.boolean.yang
       set: stmt_end
 
-  stmt_min-elements:
-    - match: '{{b_l}}(\d+){{b_r}}'
-      captures:
-        1: constant.numeric.integer.yang
-      set: stmt_end
-
-  stmt_max-elements:
-    - match: '{{b_l}}(\d+|\"unbounded\"){{b_r}}'
-      captures:
-        1: constant.numeric.integer.yang
-      set: stmt_end
-
-  stmt_ordered-by:
-    - match: '{{b_l}}(system|user){{b_r}}'
-      captures:
-        1: constant.language.yang
-      set: stmt_end
-
-  stmt_key:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_unique:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_case:
+  stmt_arg_identifier:
     - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: string.yang
       set: stmt_end
 
-  stmt_refine:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
+  stmt_arg_identifier_string:
+    - match: '{{b_l}}"({{ident}})"{{b_r}}'
       set: stmt_end
 
-  stmt_input:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_output:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_base:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_argument:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_yin-element:
-    - match: '{{b_l}}(true|false){{b_r}}'
-      captures:
-        1: constant.language.boolean.yang
-      set: stmt_end
-
-  stmt_feature:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_if-feature:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_deviation:
-    - match: '{{b_l}}(\".*\"){'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_deviate:
-    - match: '{{b_l}}(not-supported|add|replace|delete){{b_r}}'
-      captures:
-        1: constant.language.yang
-      set: stmt_end
-
-  stmt_config:
-    - match: '{{b_l}}(true|false){{b_r}}'
-      captures:
-        1: constant.language.boolean.yang
-      set: stmt_end
-
-  stmt_status:
-    - match: '{{b_l}}(current|deprecated|obsolete){{b_r}}'
-      captures:
-        1: constant.language.yang
-      set: stmt_end
-
-  stmt_reference:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_when:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_range:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_fraction-digits:
-    - match: '{{b_l}}(\d+)'
-      captures:
-        1: constant.numeric.integer.yang
-      set: stmt_end
-
-  stmt_length:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_pattern:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_enum:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_value:
-    - match: '{{b_l}}(\d+){{b_r}}'
-      captures:
-        1: constant.numeric.integer.yang
-      set: stmt_end
-
-  stmt_bit:
-    - match: '{{b_l}}({{ident}}){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_position:
-    - match: '{{b_l}}(\d+){{b_r}}'
-      captures:
-        1: constant.numeric.integer.yang
-      set: stmt_end
-
-  stmt_path:
-    - match: '{{b_l}}(\".*\"){{b_r}}'
-      captures:
-        1: string.yang
-      set: stmt_end
-
-  stmt_require-instance:
-    - match: '{{b_l}}(true|false){{b_r}}'
-      captures:
-        1: constant.language.boolean.yang
-      set: stmt_end
+  stmt_arg_string:
+    - match: '"'
+      push: double_quoted_string
 
   stmt_end:
     - match: ';'
       scope: punctuation.terminator.yang
       pop: true
     - match: '{'
-      scope: punctuation.terminator.yang
+      scope: punctuation.section.block.begin.yang
       pop: true
+    - match: '}'
+      scope: punctuation.section.block.begin.yang
 
   constants:
     # Integer constants
